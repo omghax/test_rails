@@ -1,0 +1,5 @@
+=== 1.0.0 / 2009-03-12
+
+* 1 major enhancement:
+
+  * Extracted test-rails from ZenTest 3.11.1 into a separate gem.
