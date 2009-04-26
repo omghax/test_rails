@@ -201,7 +201,7 @@ class Test::Rails::ViewTestCase < Test::Rails::FunctionalTestCase
   #
   # If a view cannot be found the test will flunk.
 
-  def render(options = {}, deprecated_status = nil)
+  def render(options = {}, *rest_args)
     @action_name = action_name caller[0] if options.empty?
     assigns[:action_name] = @action_name
 
@@ -235,7 +235,7 @@ class Test::Rails::ViewTestCase < Test::Rails::FunctionalTestCase
 
     # Do the render
     options[:TR_force] = true
-    @controller.render options, deprecated_status
+    @controller.send(:render, options, *rest_args)
 
     # Rails 1.1
     @controller.send :process_cleanup rescue nil
