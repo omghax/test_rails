@@ -95,9 +95,6 @@
 
 class Test::Rails::ViewTestCase < Test::Rails::FunctionalTestCase
 
-  self.use_transactional_fixtures = true
-  self.use_instantiated_fixtures = false
-
   ##
   # Sets up the test case.
 

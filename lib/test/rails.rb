@@ -277,6 +277,10 @@ class Object # :nodoc:
   end
 end
 
+require 'active_support'
+require 'active_support/test_case'
+require 'active_record/fixtures'
+
 require 'test/zentest_assertions'
 require 'test/rails/test_case'
 require 'test/rails/functional_test_case'
@@ -288,7 +292,7 @@ require 'test/rails/view_test_case'
 ##
 # Use sensible defaults.
 
-class Test::Unit::TestCase # :nodoc:
+class ActiveSupport::TestCase # :nodoc:
   self.use_transactional_fixtures = true
   self.use_instantiated_fixtures  = false
 end

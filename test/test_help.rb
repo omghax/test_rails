@@ -22,7 +22,10 @@ module ActionView::Helpers::FormHelper; end
 module ActionView::Helpers::UrlHelper; end
 module ActionView::Helpers::AssetTagHelper; end
 
-class << Test::Unit::TestCase
+# ActiveSupport
+require 'active_support'
+require 'active_support/test_case'
+class << ActiveSupport::TestCase
   attr_accessor :use_transactional_fixtures
   attr_accessor :use_instantiated_fixtures
 end

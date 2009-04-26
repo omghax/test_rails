@@ -3,13 +3,9 @@
 #--
 # Eventually this will hold the fixture setup stuff.
 
-class Test::Rails::TestCase < Test::Unit::TestCase
+class Test::Rails::TestCase < ActiveSupport::TestCase
 
   undef_method :default_test
-
-  # Set defaults because Rails has poor ones (and these don't inherit properly)
-  self.use_transactional_fixtures = true
-  self.use_instantiated_fixtures = false
 
 end
 
