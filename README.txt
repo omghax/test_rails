@@ -1,3 +1,10 @@
+= Test::Rails
+
+Test::Rails was dropped from ZenTest for the 4.0 release, but there
+are still a lot of tests that use it.  This is Dray Lacy's extraction of
+Test::Rails from ZenTest, updated to work with Rails 2.3.2 (at least
+partially).
+
 = ZenTest
 
 * http://www.zenspider.com/ZSS/Products/ZenTest/
