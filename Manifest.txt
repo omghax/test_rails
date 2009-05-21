@@ -19,3 +19,4 @@ test/test_rails_controller_test_case.rb
 test/test_rails_helper_test_case.rb
 test/test_rails_view_test_case.rb
 test/test_zentest_assertions.rb
+test_rails.gemspec

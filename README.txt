@@ -1,75 +1,84 @@
 = Test::Rails
 
+* http://www.zenspider.com/ZSS/Products/ZenTest/
+* http://rubyforge.org/projects/zentest/
+* mailto:ryand-ruby@zenspider.com
+
 Test::Rails was dropped from ZenTest for the 4.0 release, but there
 are still a lot of tests that use it.  This is Dray Lacy's extraction of
 Test::Rails from ZenTest, updated to work with Rails 2.3.2 (at least
 partially).
 
-= ZenTest
-
-* http://www.zenspider.com/ZSS/Products/ZenTest/
-* http://rubyforge.org/projects/zentest/
-* mailto:ryand-ruby@zenspider.com
-
 == DESCRIPTION
-
-ZenTest provides 4 different tools and 1 library: zentest, unit_diff,
-autotest, multiruby, and Test::Rails.
-
-ZenTest scans your target and unit-test code and writes your missing
-code based on simple naming rules, enabling XP at a much quicker
-pace. ZenTest only works with Ruby and Test::Unit.
-
-unit_diff is a command-line filter to diff expected results from
-actual results and allow you to quickly see exactly what is wrong.
-
-autotest is a continous testing facility meant to be used during
-development. As soon as you save a file, autotest will run the
-corresponding dependent tests.
-
-multiruby runs anything you want on multiple versions of ruby. Great
-for compatibility checking! Use multiruby_setup to manage your
-installed versions.
 
 Test::Rails helps you build industrial-strength Rails code.
 
-== STRATEGERY
-
-There are two strategeries intended for ZenTest: test conformance
-auditing and rapid XP.
-
-For auditing, ZenTest provides an excellent means of finding methods
-that have slipped through the testing process. I've run it against my
-own software and found I missed a lot in a well tested
-package. Writing those tests found 4 bugs I had no idea existed.
-
-ZenTest can also be used to evaluate generated code and execute your
-tests, allowing for very rapid development of both tests and
-implementation.
-
 == FEATURES
 
-* Scans your ruby code and tests and generates missing methods for you.
-* Includes a very helpful filter for Test::Unit output called unit_diff.
-* Continually and intelligently test only those files you change with autotest.
-* Test against multiple versions with multiruby.
-* Enhance and automatically audit your rails tests using Test::Rails.
-* Includes a LinuxJournal article on testing with ZenTest written by Pat Eyler.
-* See also: http://blog.zenspider.com/archives/zentest/
-* See also: http://blog.segment7.net/articles/category/zentest
+* Test your controllers and views in isolation from each other.
+* Test helper methods in isolation from your controllers, including those that
+  use routing.
+* Test::Rails provides some helpful assertions for dealing with collections,
+  like #assert_empty and #assert_includes, as well as negated versions
+  (#deny_empty, #deny_includes, etc.)
 
 == SYNOPSYS
 
-  ZenTest MyProject.rb TestMyProject.rb > missing.rb
+  # Typical View Test
+  class RouteViewTest < Test::Rails::ViewTestCase
 
-  ./TestMyProject.rb | unit_diff
+    fixtures :users, :routes, :points, :photos
 
-  autotest
+    def test_delete
+      # Set up instance variables for template
+      assigns[:loggedin_user] = users(:herbert)
+      assigns[:route] = routes(:work)
 
-  multiruby_setup mri:svn:current
-  multiruby ./TestMyProject.rb
+      # render template for the delete action in RouteController
+      render
 
-  (and other stuff for Test::Rails)
+      # assert that there's a form with an action of "/route/destroy"
+      assert_form form_url, :post do
+        # with a hidden id field
+        assert_input :hidden, :id
+        # And a submit button that says 'Delete!'
+        assert_submit 'Delete!'
+      end
+
+      # And a link back to the route so you don't delete it
+      assert_links_to "/route/show/#{routes(:work).id}", 'No, I do not!'
+    end
+
+  end
+
+  # Typical Layout Test
+  require 'test/test_helper'
+
+  # Create a dummy controller for layout views. This lets the setup use the
+  # right path with minimum fuss.
+  class LayoutsController < ApplicationController; end
+
+  class LayoutsViewTest < Test::Rails::ViewTestCase
+
+    fixtures :users, :routes, :points, :photos
+
+    def test_default
+      # Template set-up
+      @request.request_uri = '/foo'
+      assigns[:action_title] = 'Hello & Goodbye'
+
+      # Render an empty string with the 'application' layout.
+      render :text => '', :layout => 'application'
+
+      # Assert content just like a regular view test.
+      assert_links_to '/', 'Home'
+      assert_links_to '/user', 'Login'
+      deny_links_to '/user/logout', 'Logout'
+      assert_title 'Hello &amp; Goodbye'
+      assert_h 1, 'Hello &amp; Goodbye'
+    end
+
+  end
 
 == REQUIREMENTS
 
@@ -77,18 +86,18 @@ implementation.
 * Test::Unit or miniunit
 * Hoe
 * rubygems
-* diff.exe on windoze. Try http://gnuwin32.sourceforge.net/packages.html
+* Rails 2.3.2 (for older versions of Rails, use Test::Rails 1.0.0)
 
 == INSTALL
 
 Using Rubygems:
 
-* sudo gem install ZenTest
+* sudo gem install omghax-test_rails -s http://gems.github.com
 
 Using Rake:
 
 * rake test
-* sudo rake install
+* sudo rake install_gem
 
 == LICENSE
 

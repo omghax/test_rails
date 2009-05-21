@@ -1,3 +1,9 @@
+=== 1.1.0 / 2009-05-21
+
+* 1 minor enhancement:
+
+  * Test::Rails is now compatible with Rails 2.3.2, thanks to Erik Ostrom.
+
 === 1.0.0 / 2009-03-12
 
 * 1 major enhancement:
