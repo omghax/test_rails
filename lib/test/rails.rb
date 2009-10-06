@@ -2,7 +2,7 @@ require 'test/unit'
 require 'rubygems'
 require 'rubygems/version'
 require 'test_help' # hopefully temporary, required for Test::Rails to work
-                    # until we get rid of test_help so Test::Unit::TestCase
+                    # until we get rid of test_help so ActiveSupport::TestCase
                     # is kept virgin.
 require 'rails/version' unless defined? Rails::VERSION
 

@@ -1,3 +1,9 @@
+=== 1.2.0 / 2009-10-06
+
+* 1 minor enhancement:
+
+  * Replaced references to Test::Unit::TestCase with ActiveSupport::TestCase.
+
 === 1.1.0 / 2009-05-21
 
 * 1 minor enhancement:

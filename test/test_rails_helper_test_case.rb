@@ -28,7 +28,7 @@ begin
 rescue RuntimeError
 end if $TESTING_RTC
 
-class TestRailsHelperTestCase < Test::Unit::TestCase
+class TestRailsHelperTestCase < ActiveSupport::TestCase
 
   def test_self_inherited
     assert defined? TRHelperTest

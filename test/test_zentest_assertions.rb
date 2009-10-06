@@ -1,7 +1,7 @@
 require 'test/unit'
 require 'test/zentest_assertions'
 
-class TestZenTestAssertions < Test::Unit::TestCase
+class TestZenTestAssertions < ActiveSupport::TestCase
   @@has_mini = defined? Mini
   @@exception = if @@has_mini then
                   Mini::Assertion
